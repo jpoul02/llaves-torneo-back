@@ -1,0 +1,17 @@
+{
+  "name": "llaves-torneo-back",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend API + sync en vivo para Torneo LLAVES",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pg": "^8.11.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

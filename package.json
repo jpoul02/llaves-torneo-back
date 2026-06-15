@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "express": "^4.19.2",
-    "puppeteer": "^21.0.0",
     "pg": "^8.11.5"
   },
   "engines": {

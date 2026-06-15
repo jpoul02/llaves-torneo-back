@@ -116,28 +116,6 @@ app.get("/api/events", async (req, res) => {
   req.on("close", () => { clearInterval(ping); clients.delete(res); });
 });
 
-/* ---------- PDF generation endpoint ---------- */
-app.get('/api/generate-pdf', async (req, res) => {
-  try {
-    const puppeteer = require('puppeteer');
-    const path = require('path');
-    const { pathToFileURL } = require('url');
-    const templatePath = process.env.PDF_TEMPLATE_PATH || path.resolve(__dirname, '../pdf-template/template.html');
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-    const page = await browser.newPage();
-    const fileUrl = pathToFileURL(templatePath).href;
-    await page.goto(fileUrl, { waitUntil: 'networkidle0' });
-    const pdf = await page.pdf({ format: 'A4', printBackground: true });
-    await browser.close();
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=bracket.pdf');
-    res.send(pdf);
-  } catch (e) {
-    console.error('PDF generation failed:', e);
-    res.status(500).json({ error: 'pdf_error' });
-  }
-});
-
 /* ---------- boot ---------- */
 initDb()
   .then(() => app.listen(PORT, () => console.log("Back en puerto " + PORT + (USE_PG ? " (Postgres)" : " (memoria)"))))
